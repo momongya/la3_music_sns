@@ -9,7 +9,7 @@
 		<nav class="center-horizontal">
 			<a href="/">MUSIC SNS!!!</a>
 			<% if !current_user.nil? %>
-				<a href="/home"><img src="current_user.img" alt="user_image" width="40" height="40"></a>
+				<a href="/home"><img src="<%= current_user.image_name %>" alt="user_image" width="40" height="40"></a>
 				<a href="/search">Search</a>
 				<a href="/signout">Sign out</a>
 			<% else %>

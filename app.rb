@@ -3,6 +3,10 @@ Bundler.require
 require 'sinatra/reloader' if development?
 require './models'
 require 'dotenv/load'
+require 'open-uri'
+require 'json'
+require 'net/http'
+require 'sinatra/activerecord'
 
 enable :sessions
 
@@ -36,6 +40,14 @@ get '/home' do
 end
 
 get '/search' do
+    uri = URI("https://itunes.apple.com/search")
+    uri.query = URI.encode_www_form({
+        term: params[:keyword],
+        media: "music"
+    })
+    res = Net::HTTP.get_response(uri)
+    json = JSON.parse(res.body)
+    @music = json["results"]
     erb :search
 end
 

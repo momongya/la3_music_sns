@@ -1,19 +1,20 @@
 <section class="center-vertical">
 	<h1>検索フォーム</h1>
-	<form>
-		<input type="" name="" placeholder="キーワード">
+	<form action="/search" method="get">
+		<input type="text" name="keyword" placeholder="キーワード">
 		<input type="submit" value="検索">
 	</form>
 	<h2>検索結果</h2>
 
 		<div class="center-horizontal">
-
+			
+            <% @music.each do |music| %>
 				<div class="post center-vertical">
-					<img src="" width="125" height="125">
-					<p>アーティスト: 〇〇</p>
-					<p>アルバム: 〇〇</p>
-					<p>曲名: 〇〇</p>
-					<p><a href="#">サンプル</a></p>
+					<img src="<%= music["artworkUrl100"] %>" width="125" height="125">
+					<p>アーティスト: <%= music["artistName"] %></p>
+					<p>アルバム: <%= music["collectionName"] %></p>
+					<p>曲名: <%= music["trackName"] %></p>
+					<p><a href="<%= music["previewUrl"] %>">サンプル</a></p>
 					<form>
 						<input type="" value="" name="">
 						<input type="" value="" name="">
@@ -24,6 +25,7 @@
 						<input type="submit" value="投稿">
 					</form>
 				</div>
+			<% end %>
 
 		</div>
 
