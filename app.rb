@@ -12,14 +12,31 @@ helpers do
     end
 end
 
-before '/text' do
-    if current_user.nil?
-        redirect '/'
+before do
+    Dotenv.load
+    Cloudinary.config do |config|
+        config.cloud_name = ENV['CLOUD_NAME']
+        config.api_key = ENV['CLOUDINARY_API_KEY']
+        config.api_secret = ENV['CLOUDINARY_API_SECRET']
     end
 end
 
+# before '/text' do
+#     if current_user.nil?
+#         redirect '/'
+#     end
+# end
+
 get '/' do
     erb :index
+end
+
+get '/home' do
+    erb :home
+end
+
+get '/search' do
+    erb :search
 end
 
 get '/signup' do
@@ -35,15 +52,22 @@ post '/signin' do
 end
 
 post '/signup' do
+    img = params[:topimg]
+    tempfile = params[:tempfile]
+    upload = Cloudinary::Uploader.upload(tempfile.path)
+    img_url = upload['url']
+    
     user = User.create(
         name: params[:name],
         password: params[:password],
-        password_confirmation: params[:password_confirmation]
+        password_confirmation: params[:password_confirmation],
+        image_name: img_url
     )
+    
     if user.persisted?
         session[:user] = user.id
     end
-    redirect '/'
+    redirect '/home'
 end
 
 get '/signout' do
