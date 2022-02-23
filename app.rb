@@ -22,6 +22,10 @@ get '/' do
     erb :index
 end
 
+get '/signup' do
+    erb :signup
+end
+
 post '/signin' do
     user = User.find_by(name: params[:name])
     if user && user.authenticate(params[:password])

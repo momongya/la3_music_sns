@@ -1,5 +1,6 @@
 <section class="first-view center-vertical">
 	<h1>MUSIC SNS!!!</h1>
+	<% if current_user.nil? %>
 	<div class="login_button">
 		<form action="/signin" method="post">
         <input class="form-control" name="name" placeholder="名前を入力"><br>
@@ -7,6 +8,7 @@
         <input class="form-control" type="submit" value="sign in">
     </form>
 	</div>
+	<% end %>
 </section>
 
 <section class="center-vertical">
