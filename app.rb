@@ -53,7 +53,7 @@ end
 
 post '/signup' do
     img = params[:topimg]
-    tempfile = params[:tempfile]
+    tempfile = img[:tempfile]
     upload = Cloudinary::Uploader.upload(tempfile.path)
     img_url = upload['url']
     
