@@ -1,6 +1,19 @@
 <section class="center-vertical">
-	<h1><%= current_user.name %>の投稿</h1>
+	<h1><%= current_user.name %>の投稿</h1> 
+	<% unless @texts.empty? %>
+	<% @texts.each do |text| %>
+		<div class="post center-vertical">
+			<img src="<%= text.song_img %>" width="125" height="125">
+			<p>アーティスト: <%= text.artist %></p>
+			<p>アルバム: <%= text.album_name %></p>
+			<p>曲名: <%= text.song_title %></p>
+			<p><a href="<%= text.song_sample %>">サンプル</a></p>
+			<p>コメント: <%= text.comment %></p>
+		</div>
+	<% end %>
+	<% else %>
 	<p>投稿がありません</p>
+	<% end %>
 </section>
 
 <section class="center-vertical">

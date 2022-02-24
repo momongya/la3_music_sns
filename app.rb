@@ -36,6 +36,11 @@ get '/' do
 end
 
 get '/home' do
+    if current_user.nil?
+        @texts =Text.none
+    else
+        @texts = current_user.texts
+    end
     erb :home
 end
 
@@ -47,9 +52,34 @@ get '/search' do
         country: "JP"
     })
     res = Net::HTTP.get_response(uri)
-    json = JSON.parse(res.body)
-    @music = json["results"]
+    returned_json = JSON.parse(res.body)
+    
+    # returned_json["results"].map! do |music|
+    #     music_info = Music.find_or_create_by(track_id: music["trackId"])
+    #     music["id"] = music_info.id
+    #     music["like"] = music_info.like
+    #     music
+    # end
+    
+    @music = returned_json["results"]
+    
     erb :search
+end
+
+post '/text' do
+    unless params[:comment] == nil
+        current_user.texts.create(
+            artist: params[:artist],
+            album_name: params[:album_name],
+            song_title: params[:song_title],
+            song_img: params[:song_img],
+            song_sample: params[:song_sample],
+            comment: params[:comment]
+        )
+        redirect '/'
+    else
+        redirect "/search"
+    end
 end
 
 get '/signup' do
