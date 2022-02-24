@@ -43,7 +43,8 @@ get '/search' do
     uri = URI("https://itunes.apple.com/search")
     uri.query = URI.encode_www_form({
         term: params[:keyword],
-        media: "music"
+        media: "music",
+        country: "JP"
     })
     res = Net::HTTP.get_response(uri)
     json = JSON.parse(res.body)
