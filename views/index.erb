@@ -30,7 +30,9 @@
 				<div class="user-box">
 					<img src="" alt="user_image" width="40" height="40">
 				</div>
-		<a href="#">いいねする</a>
+				<% if Favorite.find(text.id).empty? %>
+				<a href="/text/<%= text.id %>/favorite">いいねする</a>
+				<% end %>
 			</div>
 	<% end %>
 	<% else %>

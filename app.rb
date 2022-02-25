@@ -25,12 +25,6 @@ before do
     end
 end
 
-# before '/text' do
-#     if current_user.nil?
-#         redirect '/'
-#     end
-# end
-
 get '/' do
     if Text.nil?
         @all_texts =Text.none
@@ -88,6 +82,15 @@ post '/text' do
         redirect "/search"
     end
 end
+
+get '/text/:id/favorite' do
+    Favorite.create(
+            text_id: params[:id],
+            user_id: current_user.id
+        )
+    redirect '/home'
+end
+
 
 get '/signup' do
     erb :signup
