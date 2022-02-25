@@ -32,6 +32,13 @@ end
 # end
 
 get '/' do
+    if Text.nil?
+        @all_texts =Text.none
+    else
+        @all_texts = Text.all
+    end
+    
+    
     erb :index
 end
 

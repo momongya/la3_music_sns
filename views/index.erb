@@ -13,24 +13,27 @@
 
 <section class="center-vertical">
 	<h1>最新の投稿</h1>
-
-	<div class="post center-vertical">
-		<img src="" width="125" height="125">
-		<p>アーティスト: 〇〇</p>
-		<p>アルバム: 〇〇</p>
-		<p>曲名: 〇〇</p>
-		<p><a href="#">サンプル</a></p>
-		<p>コメント: 〇〇</p>
-		<p>投稿者: 〇〇</p>
-		<a href="#">フォローする</a>
-		<a href="#">フォロー解除</a>
-		<p>いいねしたユーザー</p>
-		<div class="user-box">
-			<img src="" alt="user_image" width="40" height="40">
-		</div>
+	
+	<% unless @all_texts.empty? %>
+		<% @all_texts.each do |text| %>
+			<div class="post center-vertical">
+				<img src="<%= text.song_img %>" width="125" height="125">
+				<p>アーティスト: <%= text.artist %></p>
+				<p>アルバム: <%= text.album_name %></p>
+				<p>曲名: <%= text.song_title %></p>
+				<p><a href="<%= text.song_sample %>">サンプル</a></p>
+				<p>コメント: <%= text.comment %></p>
+				<p>投稿者: <%= text.user.name %></p>
+				<a href="#">フォローする</a>
+				<a href="#">フォロー解除</a>
+				<p>いいねしたユーザー</p>
+				<div class="user-box">
+					<img src="" alt="user_image" width="40" height="40">
+				</div>
 		<a href="#">いいねする</a>
-	</div>
-
-	<%# TODO: ここで分岐 %>
-	<p>投稿がありません</p>
+			</div>
+	<% end %>
+	<% else %>
+		<p>投稿がありません</p>
+	<% end %>
 </section>
