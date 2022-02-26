@@ -9,13 +9,13 @@ class User < ActiveRecord::Base
         length: { in: 5..10 }
     has_many :texts
     has_many :favorites, :through => :texts
-    has_many :favorite_texts, :through => :favorites, source: :texts
+    has_many :favorite_texts, :through => :favorites, :source => :text, dependent: :destroy
 end
 
 class Text < ActiveRecord::Base
     belongs_to :user
     has_many :favorites
-    has_many :favorite_users, :through => :favorites, source: :users
+    has_many :favorite_users, :through => :favorites,:source => :user, dependent: :destroy
 end
 
 class Favorite < ActiveRecord::Base

@@ -84,7 +84,8 @@ post '/text' do
 end
 
 get '/text/:id/favorite' do
-    Favorite.create(
+    # text = Text.find(params[:id])
+    current_user.favorite.create(
             text_id: params[:id],
             user_id: current_user.id
         )
