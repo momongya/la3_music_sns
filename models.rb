@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
     validates :password,
         length: { in: 5..10 }
     has_many :texts
-    has_many :favorites, :through => :texts
+    has_many :favorites
     has_many :favorite_texts, :through => :favorites, :source => :text, dependent: :destroy
 end
 

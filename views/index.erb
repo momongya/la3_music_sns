@@ -24,19 +24,22 @@
 				<p><a href="<%= text.song_sample %>">サンプル</a></p>
 				<p>コメント: <%= text.comment %></p>
 				<p>投稿者: <%= text.user.name %></p>
-				<a href="#">フォローする</a>
-				<a href="#">フォロー解除</a>
+				<% if !current_user.nil? %>
+					<a href="#">フォローする</a>
+					<a href="#">フォロー解除</a>
+				<% end %>
 				<p>いいねしたユーザー</p>
 					<% text.favorite_users.each do |favorite_user| %>
 					<div class="user-box">
 					<img src="<%= favorite_user.image_name %>" alt="user_image" width="40" height="40">
 					</div>
 					<% end %>
-				
-				<% if !text.favorite_users.find_by(id: session[:user]) %>
-					<a href="/text/<%= text.id %>/favorite">いいねする</a>
-				<% else %>
-					<a href="/text/<%= text.id %>/delete_favorite">いいね解除</a>
+				<% if !current_user.nil? %>
+					<% if !text.favorite_users.find_by(id: session[:user]) %>
+						<a href="/text/<%= text.id %>/favorite">いいねする</a>
+					<% else %>
+						<a href="/text/<%= text.id %>/delete_favorite">いいね解除</a>
+					<% end %>
 				<% end %>
 			
 			</div>

@@ -17,8 +17,28 @@
 </section>
 
 <section class="center-vertical">
-	<h1><%= current_user.name %>のイイねした投稿</h1>
-	<p>イイねがありません</p>
+	<% unless current_user.favorites.empty? %>
+		<h1><%= current_user.name %>のイイねした投稿</h1>
+		<% @favorite.each do |text| %>
+			<div class="post center-vertical">
+				<img src="<%= text.song_img %>" width="125" height="125">
+				<p>アーティスト: <%= text.artist %></p>
+				<p>アルバム: <%= text.album_name %></p>
+				<p>曲名: <%= text.song_title %></p>
+				<p><a href="<%= text.song_sample %>">サンプル</a></p>
+				<p>コメント: <%= text.comment %></p>
+				<p>投稿者: <%= text.user.name %></p>
+				<p>いいねしたユーザー</p>
+					<% text.favorite_users.each do |favorite_user| %>
+					<div class="user-box">
+					<img src="<%= favorite_user.image_name %>" alt="user_image" width="40" height="40">
+					</div>
+					<% end %>
+			</div>
+		<% end %>
+	<% else %>
+		<p>イイねがありません</p>
+	<% end %>
 </section>
 
 <section class="center-vertical">

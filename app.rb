@@ -39,8 +39,10 @@ end
 get '/home' do
     if current_user.nil?
         @texts =Text.none
+        @davorite = Favorite.none
     else
         @texts = current_user.texts
+        @favorite = current_user.favorite_texts
     end
     erb :home
 end
@@ -85,11 +87,17 @@ end
 
 get '/text/:id/favorite' do
     # text = Text.find(params[:id])
-    current_user.favorite.create(
+    Favorite.create(
             text_id: params[:id],
             user_id: current_user.id
         )
     redirect '/home'
+end
+
+get '/text/:id/delete_favorite' do
+    favorite = current_user.favorites.find_by(text_id: params[:id])
+    favorite.delete
+    redirect '/'
 end
 
 
